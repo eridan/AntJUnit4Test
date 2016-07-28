@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="junit-example" default="main">
+
+	<!-- Root Directory path -->
+	<property name="root.dir" location=".." />
+	<property name="main.build.dir" value="${root.dir}/build" />
+	<property name="main.src.dir" value="${root.dir}/src/main/calc" />
+	<property name="test.src.dir" value="${root.dir}/src/test/calc" />
+
+	<path id="classpath.test">
+		<pathelement location="${root.dir}/lib/junit-4.12.jar" />
+		<pathelement location="${root.dir}/lib/hamcrest-core-1.3.jar" />
+		<pathelement location="${main.build.dir}" />
+	</path>
+
+	<!-- 	Clean the build directory and then run the Tests -->
+	<target name="main" depends="clean,test" />
+
+	<target name="clean">
+		<echo message="Clearing BUILD directory ..." />
+		<delete dir="${build.dir}" />
+	</target>
+
+	<target name="test" depends="test-compile">
+		<junit printsummary="on" haltonfailure="yes" fork="true">
+			<classpath>
+				<path refid="classpath.test" />
+			</classpath>
+			<formatter type="brief" usefile="true" />
+			<batchtest>
+				<fileset dir="${main.build.dir}" includes="**/*Test.class" />
+			</batchtest>
+		</junit>
+	</target>
+
+	<target name="test-compile" depends="compile">
+		<javac srcdir="${test.src.dir}" destdir="${main.build.dir}"
+			includeantruntime="false">
+			<classpath refid="classpath.test" />
+		</javac>
+	</target>
+
+	<target name="compile">
+		<mkdir dir="${main.build.dir}" />
+		<javac srcdir="${main.src.dir}" destdir="${main.build.dir}"
+			includeantruntime="false" />
+	</target>
+</project>
