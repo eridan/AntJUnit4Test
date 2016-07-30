@@ -26,7 +26,10 @@
 			<classpath>
 				<path refid="classpath.test" />
 			</classpath>
-			<formatter type="brief" usefile="true" />
+			
+			<!-- usefile="true/false" creates an output file with test results -->
+			
+			<formatter type="brief" usefile="false" />
 			<batchtest>
 				<fileset dir="${main.build.dir}" includes="**/*Test.class" />
 			</batchtest>
